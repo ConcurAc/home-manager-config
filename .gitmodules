@@ -1,0 +1,3 @@
+[submodule "users/connor/dotfiles"]
+	path = users/connor/dotfiles
+	url = https://github.com/concurac/dotfiles
