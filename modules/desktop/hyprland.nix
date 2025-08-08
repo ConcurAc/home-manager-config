@@ -409,7 +409,6 @@ in {
       '';
     };
 
-    imv.enable = true;
     mpv.enable = true;
     zathura.enable = true;
   };
@@ -469,6 +468,7 @@ in {
       # GUI
       waypaper # wallpaper setter
       file-roller # archive manager
+      oculante # image viewer
     ];
   };
 
@@ -479,6 +479,17 @@ in {
       extraPortals = with pkgs; [
         xdg-desktop-portal-hyprland
       ];
+    };
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf.desktop" ];
+
+        "image/gif" = [ "oculante.desktop"];
+        "image/jpeg" = [ "oculante.desktop" "satty.desktop" ];
+        "image/png" = [ "oculante.desktop" "satty.desktop" ];
+        "image/webp" = [ "oculante.desktop" ];
+      };
     };
   };
 
