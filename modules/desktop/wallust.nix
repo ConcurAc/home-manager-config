@@ -48,9 +48,9 @@ in {
             [colors]
             background={{background | strip}}
             foreground={{foreground | strip}}
-            flash={{cursor}}
 
-            # cursor={{cursor}}
+            flash={{cursor | strip}}
+            cursor={{cursor | strip}}
 
             ## Normal/regular colors (color palette 0-7)
             regular0={{color0 | strip}}  # black
