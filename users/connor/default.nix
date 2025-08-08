@@ -6,12 +6,6 @@
     homeDirectory = "/home/connor";
     stateVersion = "25.05";
 
-    file = {
-      "${config.xdg.configHome}/hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
-      "${config.xdg.configHome}/hypr/hyprland".source = ./dotfiles/hypr/hyprland;
-      "${config.xdg.configHome}/wallust/wallust.toml".source = ./dotfiles/wallust/wallust.toml;
-      "${config.xdg.configHome}/wallust/templates".source = ./dotfiles/wallust/templates;
-    };
     packages = with pkgs; [
       brave
       zed-editor

@@ -1,3 +1,0 @@
-[submodule "users/connor/dotfiles"]
-	path = users/connor/dotfiles
-	url = git@github.com:concurac/dotfiles
