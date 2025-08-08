@@ -207,6 +207,8 @@ let
     windowrule = idleinhibit focus, fullscreen:1
   '';
 in {
+  imports = [ ./wallust.nix ];
+
   wayland.windowManager.hyprland = {
     enable = true;
     # conflicts with uwsm
@@ -284,7 +286,8 @@ in {
       server.enable = true;
       settings = {
         main = {
-          font = "monospace:size=14";
+          include = "${config.xdg.configHome}/foot/colors.ini";
+          font = "monospace:size=10";
           dpi-aware = "yes";
         };
         colors = {
@@ -464,7 +467,6 @@ in {
       libqalculate # calculator
 
       # GUI
-      anyrun # application runner
       waypaper # wallpaper setter
       file-roller # archive manager
     ];
