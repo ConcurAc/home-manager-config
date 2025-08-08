@@ -199,12 +199,12 @@ let
     windowrule = rounding 0, floating:0, onworkspace:f[1]
 
     # Ignore maximize requests from apps. You'll probably like this.
-    windowrulev2 = suppressevent maximize, class:.*
+    windowrule = suppressevent maximize, class:.*
 
     # Fix some dragging issues with XWayland
-    windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+    windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
 
-    windowrulev2 = idleinhibit focus, fullscreen:1
+    windowrule = idleinhibit focus, fullscreen:1
   '';
 in {
   wayland.windowManager.hyprland = {
@@ -227,7 +227,7 @@ in {
       $run = uwsm-app --
 
       $terminal = footclient
-      $popup = [float] $run $terminal -e
+      $popup = [float; size 50% 40%] $run $terminal -e
 
       # CLI
       $screenshot = grim -g "$(slurp)" - | wl-copy
@@ -256,7 +256,6 @@ in {
       bind = $mod, V, togglefloating,
       bind = $mod, P, pseudo,
       bind = $mod, J, togglesplit,
-      bind = $mod, F, fullscreen,
 
       bind = $mod, R, exec, $run $menu
       bind = $mod, E, exec, $popup $files
@@ -296,11 +295,115 @@ in {
     anyrun = {
       enable = true;
       config = {
-        closeOnClick = true;
-        plugins = with pkgs; [
+        x.fraction = 0.5;
+        y.fraction = 0.5;
+        width.absolute = 800;
+        height.fraction = 0.75;
+
+        plugins = [
           "libapplications.so"
         ];
       };
+      extraCss = ''
+        @import url("colors.css");
+
+        @define-color window alpha(@color13, 0.2);
+
+        @define-color bg alpha(@color0, 0.8);
+        @define-color bg-selected alpha(@color6, 0.7);
+
+        @define-color border @color14;
+
+        @define-color text @color15;
+        @define-color text-selected @color7;
+
+        * {
+            font-family: monospace;
+
+            margin: 0;
+            padding: 0;
+
+            border-style: none;
+            border-width: 2px;
+            border-radius: 12px;
+            border-color: @border;
+
+            outline: none;
+
+            background: none;
+
+            color: @text;
+        }
+
+        window {
+            color: @cursor;
+            background-color: @window;
+        }
+
+        entry {
+            padding: 0.1rem;
+            border-style: solid;
+            background-color: @bg;
+        }
+
+        #main {
+            margin-top: 2px;
+        }
+
+        #main box {
+            padding: 4px;
+
+            border-style: solid;
+
+            background-color: @bg;
+        }
+
+        #main box * {
+            border-style: none;
+
+            background: none;
+        }
+
+        #plugin {
+            margin-top: 1px;
+            margin-bottom: 1px;
+            font-weight: bold;
+            background: none;
+        }
+
+        #plugin * {
+            margin: 0;
+        }
+
+        #match {
+            margin: 2px;
+            padding: 2px;
+
+            color: @text;
+        }
+
+        #match:selected {
+            padding: 0px;
+            border-style: solid;
+
+            color: @text-selected;
+
+            background-color: @bg-selected;
+        }
+
+        #match * {
+            margin: 0;
+        }
+
+        #match-title {
+            font-weight: bold;
+        }
+
+        #match-desc {
+            font-style: italic;
+            font-weight: normal;
+        }
+      '';
     };
 
     imv.enable = true;
@@ -311,7 +414,24 @@ in {
   services = {
     hypridle.enable = true;
     hyprpolkitagent.enable = true;
-    hyprsunset.enable = true;
+    hyprsunset = {
+      enable = true;
+      settings = {
+        max-gamma = 150;
+        profile = [
+          {
+            time = "7:30";
+            temperature = 4000;
+            identity = true;
+          }
+          {
+            time = "21:00";
+            temperature = 3000;
+            gamma = 0.8;
+          }
+        ];
+      };
+    };
     swww.enable = true;
     clipse.enable = true;
   };
