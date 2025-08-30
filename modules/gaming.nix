@@ -1,32 +1,31 @@
 { pkgs, ... }:
-with pkgs;
-let
-  # pkgs prefix for 64 and 86 bit software
-  game_dependencies = pkgs: [
-    # Runners
-    wineWowPackages.waylandFull # Windows
-
-    dolphin-emu # Wii
-    cemu # Wii U
-
-    melonDS # DS
-    azahar # 3DS
-
-    shadps4 # PS4
-
-    # Games
-    prismlauncher # Minecraft
-
-    # Dependencies
-    libadwaita gtk4 git p7zip libwebp # HSR
-  ];
-in {
-  home.packages = [
-    (lutris-free.override {
-      extraLibraries = game_dependencies;
-    })
-    protonup # protonGE manager
+{
+  home.packages = with pkgs; [
     ctrtool # 3ds extraction
-    cwiid # Wii controller
   ];
+
+  programs.lutris = {
+    enable = true;
+    package = pkgs.lutris-free;
+    extraPackages = with pkgs; [
+      # Games
+      prismlauncher # Minecraft
+
+      # Extra Dependencies
+      libadwaita gtk4 git p7zip libwebp
+    ];
+    protonPackages = with pkgs; [
+      proton-ge-bin
+    ];
+    winePackages = with pkgs; [
+      wineWowPackages.waylandFull
+    ];
+    runners = {
+      melonds.package = pkgs.melonDS;
+      dolphin.package = pkgs.dolphin-emu;
+      cemu.package = pkgs.cemu;
+
+      citra.settings.runner.runner_executable = "${pkgs.azahar}/bin/azahar";
+    };
+  };
 }
