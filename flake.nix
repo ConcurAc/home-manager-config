@@ -10,16 +10,26 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs =
+    { nixpkgs, home-manager, ... }:
     let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
-    in {
-      homeConfigurations.connor = home-manager.lib.homeManagerConfiguration {
+    in
+    {
+      homeConfigurations.effigy = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         modules = [
           ./users/connor
+          ./modules/gaming.nix
           ./modules/desktop/hyprland.nix
+        ];
+      };
+      homeConfigurations.hub = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+
+        modules = [
+          ./users/connor
         ];
       };
     };
