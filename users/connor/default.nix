@@ -15,6 +15,8 @@
       blender
       gimp3
       inkscape
+      libreoffice-fresh
+      freecad
     ];
   };
 
@@ -43,15 +45,17 @@
         };
       };
     };
-    wallust.enable = true;
   };
 
   services = {
     syncthing.enable = true;
+    easyeffects.enable = true;
   };
 
   xdg = {
     userDirs.enable = true;
     terminal-exec.enable = true;
   };
+
+  nixpkgs.config.allowUnfree = true;
 }
