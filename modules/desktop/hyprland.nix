@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 let
+  withUWSM = true;
   appearance = ''
     # Refer to https://wiki.hyprland.org/Configuring/Variables/
 
@@ -191,12 +192,6 @@ let
   '';
   rules = ''
     # Ref https://wiki.hyprland.org/Configuring/Workspace-Rules/
-    workspace = w[tv1], gapsout:0, gapsin:0
-    workspace = f[1], gapsout:0, gapsin:0
-    windowrule = bordersize 0, floating:0, onworkspace:w[tv1]
-    windowrule = rounding 0, floating:0, onworkspace:w[tv1]
-    windowrule = bordersize 0, floating:0, onworkspace:f[1]
-    windowrule = rounding 0, floating:0, onworkspace:f[1]
 
     # Ignore maximize requests from apps. You'll probably like this.
     windowrule = suppressevent maximize, class:.*
@@ -212,7 +207,7 @@ in {
   wayland.windowManager.hyprland = {
     enable = true;
     # conflicts with uwsm
-    systemd.enable = false;
+    systemd.enable = !withUWSM;
     extraConfig = ''
       # Refer to the wiki for more information.
       # https://wiki.hyprland.org/Configuring/
@@ -220,16 +215,16 @@ in {
       source = ~/.config/hypr/colors.conf
 
       # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitor=, preferred, auto, 1
+      monitor= , preferred, auto, 1
 
       # See https://wiki.hyprland.org/Configuring/Keywords/
 
       # Set programs that you use
 
-      $run = uwsm-app --
+      ${if withUWSM then "$run = uwsm-app --" else "$run ="}
 
       $terminal = footclient
-      $popup = [float; size 50% 40%] $run $terminal -e
+      $popup = [float] $run foot -e
 
       # CLI
       $screenshot = grim -g "$(slurp)" - | wl-copy
@@ -254,10 +249,11 @@ in {
       bind = $mod, Q, exec, $run $terminal
 
       bind = $mod, C, killactive,
-      bind = $mod, M, exit,
+      bind = $mod, M, ${if withUWSM then "exec, uwsm stop" else "exit,"}
       bind = $mod, V, togglefloating,
       bind = $mod, P, pseudo,
       bind = $mod, J, togglesplit,
+      bind = $mod, F, fullscreenstate, 2 0
 
       bind = $mod, R, exec, $run $menu
       bind = $mod, E, exec, $popup $files
@@ -287,7 +283,7 @@ in {
       settings = {
         main = {
           include = "${config.xdg.configHome}/foot/colors.ini";
-          font = "monospace:size=10";
+          font = "monospace:size=8";
           dpi-aware = "yes";
         };
         colors = {
@@ -493,11 +489,23 @@ in {
     };
   };
 
+  dconf = {
+    enable = true;
+    settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+    };
+  };
+
   gtk = {
     enable = true;
     theme = {
       name = "Adwaita-dark";
       package = pkgs.gnome-themes-extra;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme=1;
     };
   };
 
