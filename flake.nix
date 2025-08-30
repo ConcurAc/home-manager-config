@@ -22,6 +22,7 @@
         modules = [
           ./users/connor
           ./modules/gaming.nix
+          ./modules/music.nix
           ./modules/desktop/hyprland.nix
         ];
       };
