@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   home = {
@@ -11,12 +11,6 @@
       zed-editor
       keepassxc
       webcord
-
-      blender
-      gimp3
-      inkscape
-      libreoffice-fresh
-      freecad
     ];
   };
 

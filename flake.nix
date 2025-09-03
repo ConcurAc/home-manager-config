@@ -16,21 +16,12 @@
       pkgs = import nixpkgs { system = "x86_64-linux"; };
     in
     {
-      homeConfigurations.effigy = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.connor = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         modules = [
-          ./users/connor
-          ./modules/gaming.nix
-          ./modules/music.nix
+          ./home.nix
           ./modules/desktop/hyprland.nix
-        ];
-      };
-      homeConfigurations.hub = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        modules = [
-          ./users/connor
         ];
       };
     };
