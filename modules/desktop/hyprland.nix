@@ -1,130 +1,86 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  withUWSM = true;
-  appearance = ''
-    # Refer to https://wiki.hyprland.org/Configuring/Variables/
+  cfg = config.desktop;
 
-    # https://wiki.hyprland.org/Configuring/Variables/#general
+  modifierMap = {
+    super = "SUPER";
+    shift = "SHIFT";
+    alt = "ALT";
+    ctrl = "CTRL";
+  };
+
+  run = if cfg.withUWSM then "uwsm-app --" else "";
+
+  layout = ''
+    monitor = , preferred, auto, 1
+
     general {
-        gaps_in = 5
-        gaps_out = 20
-
-        border_size = 2
-
-        # Set to true enable resizing windows by clicking and dragging on borders and gaps
-        resize_on_border = false
-
-        # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
-        allow_tearing = false
-
-        layout = dwindle
+      gaps_in = 5
+      gaps_out = 20
+      border_size = 2
+      layout = dwindle
     }
 
-    # https://wiki.hyprland.org/Configuring/Variables/#decoration
-    decoration {
-        rounding = 10
-
-        # Change transparency of focused and unfocused windows
-        active_opacity = 1.0
-        inactive_opacity = 1.0
-
-        shadow {
-            enabled = false
-            range = 4
-            render_power = 3
-            color = rgba(1a1a1aee)
-        }
-
-        # https://wiki.hyprland.org/Configuring/Variables/#blur
-        blur {
-            enabled = false
-            size = 3
-            passes = 1
-
-            vibrancy = 0.1696
-        }
-    }
-
-    # https://wiki.hyprland.org/Configuring/Variables/#animations
-    animations {
-        enabled = true
-
-        # Default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
-
-        bezier = easeOutQuint,0.23,1,0.32,1
-        bezier = easeInOutCubic,0.65,0.05,0.36,1
-        bezier = linear,0,0,1,1
-        bezier = almostLinear,0.5,0.5,0.75,1.0
-        bezier = quick,0.15,0,0.1,1
-
-        animation = global, 1, 10, default
-        animation = border, 1, 5.39, easeOutQuint
-        animation = windows, 1, 4.79, easeOutQuint
-        animation = windowsIn, 1, 4.1, easeOutQuint, popin 87%
-        animation = windowsOut, 1, 1.49, linear, popin 87%
-        animation = fadeIn, 1, 1.73, almostLinear
-        animation = fadeOut, 1, 1.46, almostLinear
-        animation = fade, 1, 3.03, quick
-        animation = layers, 1, 3.81, easeOutQuint
-        animation = layersIn, 1, 4, easeOutQuint, fade
-        animation = layersOut, 1, 1.5, linear, fade
-        animation = fadeLayersIn, 1, 1.79, almostLinear
-        animation = fadeLayersOut, 1, 1.39, almostLinear
-        animation = workspaces, 1, 1.94, almostLinear, fade
-        animation = workspacesIn, 1, 1.21, almostLinear, fade
-        animation = workspacesOut, 1, 1.94, almostLinear, fade
-    }
-
-    # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
     dwindle {
-        pseudotile = true # Master switch for pseudotiling. Enabling is bound to mod + P in the keybinds section below
-        preserve_split = true # You probably want this
-    }
-
-    # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-    master {
-        new_status = master
-    }
-
-    # https://wiki.hyprland.org/Configuring/Variables/#misc
-    misc {
-        vfr = true
-
-        force_default_wallpaper = 0 # Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo = true # If true disables the random hyprland logo / anime girl background. :(
-
-        font_family = monospace
+      pseudotile = true
     }
   '';
   input = ''
-    # https://wiki.hyprland.org/Configuring/Variables/#input
     input {
-        kb_layout = us
-        kb_variant =
-        kb_model =
-        kb_options =
-        kb_rules =
+      touchpad {
+        tap-to-click = false
+        natural_scroll = true
+      }
 
-        follow_mouse = 1
-
-        sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
-
-        touchpad {
-            natural_scroll = true
-            tap-to-click = 0
-        }
-        tablet {
-            output = current
-            left_handed = true
-        }
+      tablet {
+        left_handed = true
+      }
     }
 
-    # https://wiki.hyprland.org/Configuring/Variables/#gestures
     gestures {
-        workspace_swipe = true
+      workspace_swipe = true
+    }
+  '';
+  appearance = ''
+    decoration {
+      rounding = 10
+      active_opacity = 1.0
+      inactive_opacity = 1.0
     }
 
-    # Switch workspaces with mod + [0-9]
+    animations {
+      enabled = true
+
+      bezier = easeOutQuint,0.23,1,0.32,1
+      bezier = easeInOutCubic,0.65,0.05,0.36,1
+      bezier = linear,0,0,1,1
+      bezier = almostLinear,0.5,0.5,0.75,1.0
+      bezier = quick,0.15,0,0.1,1
+
+      animation = global, 1, 10, default
+      animation = border, 1, 5.39, easeOutQuint
+      animation = windows, 1, 4.79, easeOutQuint
+      animation = windowsIn, 1, 4.1, easeOutQuint, popin 87%
+      animation = windowsOut, 1, 1.49, linear, popin 87%
+      animation = fadeIn, 1, 1.73, almostLinear
+      animation = fadeOut, 1, 1.46, almostLinear
+      animation = fade, 1, 3.03, quick
+      animation = layers, 1, 3.81, easeOutQuint
+      animation = layersIn, 1, 4, easeOutQuint, fade
+      animation = layersOut, 1, 1.5, linear, fade
+      animation = fadeLayersIn, 1, 1.79, almostLinear
+      animation = fadeLayersOut, 1, 1.39, almostLinear
+      animation = workspaces, 1, 1.94, almostLinear, fade
+      animation = workspacesIn, 1, 1.21, almostLinear, fade
+      animation = workspacesOut, 1, 1.94, almostLinear, fade
+    }
+  '';
+  binds = ''
     bind = SUPER, 1, workspace, 1
     bind = SUPER, 2, workspace, 2
     bind = SUPER, 3, workspace, 3
@@ -136,7 +92,6 @@ let
     bind = SUPER, 9, workspace, 9
     bind = SUPER, 0, workspace, 10
 
-    # Move active window to a workspace with mod + SHIFT + [0-9]
     bind = SUPER SHIFT, 1, movetoworkspace, 1
     bind = SUPER SHIFT, 2, movetoworkspace, 2
     bind = SUPER SHIFT, 3, movetoworkspace, 3
@@ -148,370 +103,110 @@ let
     bind = SUPER SHIFT, 9, movetoworkspace, 9
     bind = SUPER SHIFT, 0, movetoworkspace, 10
 
-    # Example special workspace (scratchpad)
     bind = SUPER, S, togglespecialworkspace, magic
     bind = SUPER SHIFT, S, movetoworkspace, special:magic
 
-    # Scroll through existing workspaces
-    # with mod + scroll
     bind = SUPER, mouse_down, workspace, e+1
     bind = SUPER, mouse_up, workspace, e-1
-
-    # Move active window through existing workspaces
-    # with mod + shift + scroll
     bind = SUPER SHIFT, mouse_down, movetoworkspace, e+1
     bind = SUPER SHIFT, mouse_up, movetoworkspace, e-1
 
-    # Scroll through existing workspaces
-    # with mod + arrow keys
     bind = SUPER, right, workspace, e+1
     bind = SUPER, left, workspace, e-1
-
-    # Move active window through existing workspaces
-    # with mod + shift + arrow keys
     bind = SUPER SHIFT, right, movetoworkspace, e+1
     bind = SUPER SHIFT, left, movetoworkspace, e-1
 
-    # Move/resize windows with mod + LMB/RMB and dragging
     bindm = SUPER, mouse:272, movewindow
     bindm = SUPER, mouse:273, resizewindow
-
-    # Laptop multimedia keys for volume and LCD brightness
-    bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+
-    bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
-    bindel = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-    bindel = , XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-    bindel = , XF86MonBrightnessUp, exec, brightnessctl s 1%+
-    bindel = , XF86MonBrightnessDown, exec, brightnessctl s 1%-
-
-    # Requires playerctl
-    bindl = , XF86AudioNext, exec, playerctl next
-    bindl = , XF86AudioPause, exec, playerctl play-pause
-    bindl = , XF86AudioPlay, exec, playerctl play-pause
-    bindl = , XF86AudioPrev, exec, playerctl previous
   '';
-  rules = ''
-    # Ref https://wiki.hyprland.org/Configuring/Workspace-Rules/
-
-    # Ignore maximize requests from apps. You'll probably like this.
-    windowrule = suppressevent maximize, class:.*
-
-    # Fix some dragging issues with XWayland
-    windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
-
-    windowrule = idleinhibit focus, fullscreen:1
+  misc = ''
+    misc {
+      vfr = true
+      force_default_wallpaper = 0
+      disable_hyprland_logo = true
+    }
   '';
-in {
-  imports = [ ./wallust.nix ];
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    # conflicts with uwsm
-    systemd.enable = !withUWSM;
-    extraConfig = ''
-      # Refer to the wiki for more information.
-      # https://wiki.hyprland.org/Configuring/
-
-      source = ~/.config/hypr/colors.conf
-
-      # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitor= , preferred, auto, 1
-
-      # See https://wiki.hyprland.org/Configuring/Keywords/
-
-      # Set programs that you use
-
-      ${if withUWSM then "$run = uwsm-app --" else "$run ="}
-
-      $terminal = footclient
-      $popup = [float] $run foot -e
-
-      # CLI
-      $screenshot = grim -g "$(slurp)" - | wl-copy
-      $annotate = grim -g "$(slurp)" - | satty -f - --fullscreen
-
-      # TUI
-      $files = yazi
-      $wifi = impala
-      $bluetooth = bluetui
-      $clipboard = clipse
-      $calculator = qalc -s autocalc
-
-      # GUI
-      $menu = anyrun
-
-      exec-once = $run foot -s
-      exec-once = $run waypaper --restore
-
-      # BINDS
-
-      $mod = SUPER
-      bind = $mod, Q, exec, $run $terminal
-
-      bind = $mod, C, killactive,
-      bind = $mod, M, ${if withUWSM then "exec, uwsm stop" else "exit,"}
-      bind = $mod, V, togglefloating,
-      bind = $mod, P, pseudo,
-      bind = $mod, J, togglesplit,
-      bind = $mod, F, fullscreenstate, 2 0
-
-      bind = $mod, R, exec, $run $menu
-      bind = $mod, E, exec, $popup $files
-      bind = $mod, H, exec, $popup $clipboard
-
-      bind = $mod, W, exec, $popup $wifi
-      bind = $mod, B, exec, $popup $bluetooth
-
-      bind = $mod, O, exec, hyprpicker
-
-      bind = $mod, Print, exec, $run $annotate
-      bind = , Print, exec, $run $screenshot
-      bind = , XF86Calculator, exec, $popup $calculator
-
-      ${appearance}
-      ${input}
-      ${rules}
-    '';
-  };
-
-  programs = {
-    hyprlock.enable = true;
-
-    foot = {
+in
+{
+  config = lib.mkIf cfg.enable {
+    wayland.windowManager.hyprland = {
       enable = true;
-      server.enable = true;
-      settings = {
-        main = {
-          include = "${config.xdg.configHome}/foot/colors.ini";
-          font = "monospace:size=8";
-          dpi-aware = "yes";
-        };
-        colors = {
-          alpha = "0.8";
-        };
-      };
-    };
-    anyrun = {
-      enable = true;
-      config = {
-        x.fraction = 0.5;
-        y.fraction = 0.5;
-        width.absolute = 800;
-        height.fraction = 0.75;
+      systemd.enable = !cfg.withUWSM;
+      extraConfig = ''
+        ${layout}
 
-        plugins = [
-          "libapplications.so"
-        ];
-      };
-      extraCss = ''
-        @import url("colors.css");
+        ${misc}
 
-        @define-color window alpha(@color13, 0.2);
+        ${appearance}
 
-        @define-color bg alpha(@color0, 0.8);
-        @define-color bg-selected alpha(@color6, 0.7);
+        ${input}
 
-        @define-color border @color14;
+        ${binds}
 
-        @define-color text @color15;
-        @define-color text-selected @color7;
+        bind = SUPER, C, killactive,
+        bind = SUPER, M, ${if cfg.withUWSM then "exec, uwsm stop" else "exit,"}
+        bind = SUPER, V, togglefloating,
+        bind = SUPER, P, pseudo,
+        bind = SUPER, J, togglesplit,
+        bind = SUPER, F, fullscreenstate, 2 0
+        bind = SUPER, O, exec, hyprpicker
 
-        * {
-            font-family: monospace;
-
-            margin: 0;
-            padding: 0;
-
-            border-style: none;
-            border-width: 2px;
-            border-radius: 12px;
-            border-color: @border;
-
-            outline: none;
-
-            background: none;
-
-            color: @text;
+        ${
+          with lib.strings;
+          concatLines (
+            map (
+              cmd:
+              let
+                command = if (isString cmd) then cmd else concatStringsSep " " cmd;
+              in
+              "exec-once = ${run} ${command}"
+            ) cfg.startup
+          )
+        }
+        ${
+          with lib.strings;
+          concatLines (
+            map (
+              exec:
+              let
+                mod = concatMapStringsSep " " (mod: modifierMap.${mod}) exec.modifiers;
+                options = concatStrings [
+                  (optionalString (exec.description != null) "d")
+                  (optionalString (exec.repeat) "e")
+                  (optionalString (exec.locked) "l")
+                ];
+                description = optionalString (exec.description != null) ''"${exec.description}", '';
+                rules =
+                  let
+                    contents = concatStrings [
+                      (optionalString exec.float "float; ")
+                    ];
+                  in
+                  optionalString (contents != "") "[ ${contents}]";
+                command = if (isString exec.command) then exec.command else concatStringsSep " " exec.command;
+              in
+              "bind${options} = ${mod}, ${exec.bind}, ${description}exec, ${rules} ${run} ${command}"
+            ) cfg.binds
+          )
         }
 
-        window {
-            color: @cursor;
-            background-color: @window;
-        }
-
-        entry {
-            padding: 0.1rem;
-            border-style: solid;
-            background-color: @bg;
-        }
-
-        #main {
-            margin-top: 2px;
-        }
-
-        #main box {
-            padding: 4px;
-
-            border-style: solid;
-
-            background-color: @bg;
-        }
-
-        #main box * {
-            border-style: none;
-
-            background: none;
-        }
-
-        #plugin {
-            margin-top: 1px;
-            margin-bottom: 1px;
-            font-weight: bold;
-            background: none;
-        }
-
-        #plugin * {
-            margin: 0;
-        }
-
-        #match {
-            margin: 2px;
-            padding: 2px;
-
-            color: @text;
-        }
-
-        #match:selected {
-            padding: 0px;
-            border-style: solid;
-
-            color: @text-selected;
-
-            background-color: @bg-selected;
-        }
-
-        #match * {
-            margin: 0;
-        }
-
-        #match-title {
-            font-weight: bold;
-        }
-
-        #match-desc {
-            font-style: italic;
-            font-weight: normal;
-        }
+        windowrule = suppressevent maximize, class:.*
+        windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+        windowrule = idleinhibit focus, fullscreen:1
       '';
     };
 
-    mpv.enable = true;
-    zathura.enable = true;
-  };
-
-  services = {
-    hypridle.enable = true;
-    hyprpolkitagent.enable = true;
-    hyprsunset = {
+    programs.hyprlock = {
       enable = true;
-      settings = {
-        max-gamma = 150;
-        profile = [
-          {
-            time = "7:30";
-            temperature = 4000;
-            identity = true;
-          }
-          {
-            time = "21:00";
-            temperature = 3000;
-            gamma = 0.8;
-          }
-        ];
-      };
     };
-    swww.enable = true;
-    clipse.enable = true;
-  };
 
-  home = {
-    pointerCursor = {
-      hyprcursor.enable = true;
-      name = "rose-pine-hyprcursor";
-      package = pkgs.rose-pine-hyprcursor;
+    services = {
+      hyprpolkitagent.enable = true;
+      hypridle.enable = true;
     };
-    packages = with pkgs; [
-      # First party packages
+
+    home.packages = with pkgs; [
       hyprpicker
-
-      # Third party packages
-      libayatana-appindicator-gtk3 # app indicators
-      satty # annotation util
-
-      # CLI
-      brightnessctl # screen brightness
-      playerctl # audio playback
-      wireplumber # pipewire control
-      wl-clipboard # clipboard
-      grim # screenshot util
-      slurp # screen selection util
-
-      # TUI
-      impala # wifi
-      bluetui # bluetooth
-      libqalculate # calculator
-
-      # GUI
-      waypaper # wallpaper setter
-      file-roller # archive manager
-      oculante # image viewer
     ];
-  };
-
-  xdg = {
-    enable = true;
-    portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-hyprland
-      ];
-    };
-    mimeApps = {
-      enable = true;
-      defaultApplications = {
-        "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf.desktop" ];
-
-        "image/gif" = [ "oculante.desktop"];
-        "image/jpeg" = [ "oculante.desktop" "satty.desktop" ];
-        "image/png" = [ "oculante.desktop" "satty.desktop" ];
-        "image/webp" = [ "oculante.desktop" ];
-      };
-    };
-  };
-
-  dconf = {
-    enable = true;
-    settings = {
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-      };
-    };
-  };
-
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
-    };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme=1;
-    };
-  };
-
-  qt = {
-    enable = true;
-    platformTheme.name = "adwaita";
-    style.name = "adwaita-dark";
   };
 }
