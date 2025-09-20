@@ -16,10 +16,17 @@
       zed-editor
       keepassxc
       webcord
+      flare-signal
+
+      freecad-wayland
+      blender
+      gimp3
+      inkscape
 
       oculante
       libqalculate
       satty
+      file-roller
 
       brightnessctl
       playerctl
@@ -113,13 +120,14 @@
   stylix = {
     enable = true;
     autoEnable = true;
-    image = ./wallpaper.png;
+    image = ./wallpaper.jpg;
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.zed-mono;
         name = "ZedMono NF Extd";
       };
     };
+    polarity = "dark";
     opacity = {
       terminal = 0.8;
     };
@@ -144,19 +152,19 @@
         {
           description = "Open foot terminal";
           command = [ "footclient" ];
-          bind = "T";
+          bind = "Q";
           modifiers = [ "super" ];
         }
         {
           description = "Run applications with bemenu";
           command = [
             terminal
-            "-e"
-            (lib.getExe pkgs.j4-dmenu-desktop)
-            "--dmenu='BEMENU_BACKEND=curses bemenu-run --auto-select --fork'"
+            "bash"
+            "-c"
+            "'BEMENU_BACKEND=curses bemenu-run --fork --auto-select'"
           ];
           modifiers = [ "super" ];
-          bind = "D";
+          bind = "R";
           float = true;
         }
         {
