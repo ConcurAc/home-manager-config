@@ -211,6 +211,16 @@
         }
         {
           command = [
+            "makoctl"
+            "dismiss"
+            "-a"
+          ];
+          modifiers = [ "super" ];
+          bind = "ESCAPE";
+          locked = true;
+        }
+        {
+          command = [
             "wpctl"
             "set-volume"
             "@DEFAULT_AUDIO_SINK@"
