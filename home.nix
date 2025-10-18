@@ -33,6 +33,9 @@
       grim
       slurp
       wl-clipboard-rs
+
+      impala
+      bluetui
     ];
 
     pointerCursor = {
