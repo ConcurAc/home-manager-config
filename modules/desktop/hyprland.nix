@@ -42,9 +42,8 @@ let
       }
     }
 
-    gestures {
-      workspace_swipe = true
-    }
+    gesture = 3, horizontal, workspace
+
   '';
   appearance = ''
     decoration {
@@ -202,7 +201,7 @@ in
 
     services = {
       hyprpolkitagent.enable = true;
-      hypridle.enable = true;
+      # hypridle.enable = true;
     };
 
     home.packages = with pkgs; [
