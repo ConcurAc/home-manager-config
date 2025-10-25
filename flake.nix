@@ -2,7 +2,6 @@
   description = "Home Manager configuration";
 
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -16,6 +15,10 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -24,6 +27,7 @@
       home-manager,
       stylix,
       nixvim,
+      niri,
       ...
     }:
     let
@@ -36,8 +40,9 @@
         modules = [
           stylix.homeModules.stylix
           nixvim.homeModules.nixvim
+          niri.homeModules.niri
+
           ./home.nix
-          ./modules/desktop/hyprland.nix
         ];
       };
     };

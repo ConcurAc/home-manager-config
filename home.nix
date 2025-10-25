@@ -1,9 +1,5 @@
-{ lib, pkgs, ... }:
+{ config, pkgs, ... }:
 {
-  imports = [
-    ./modules/desktop
-  ];
-
   nixpkgs.config.allowUnfree = true;
 
   home = {
@@ -37,12 +33,6 @@
       impala
       bluetui
     ];
-
-    pointerCursor = {
-      hyprcursor.enable = true;
-      name = "rose-pine-hyprcursor";
-      package = pkgs.rose-pine-hyprcursor;
-    };
   };
 
   programs = {
@@ -50,11 +40,14 @@
     fish.enable = true;
     git = {
       enable = true;
-      userName = "Connor Davis";
-      userEmail = "concurac@proton.me";
+      settings.user = {
+        name = "Connor Davis";
+        email = "concurac@proton.me";
+      };
     };
     ssh = {
       enable = true;
+      enableDefaultConfig = false;
       matchBlocks = {
         "hub" = {
           user = "connor";
@@ -73,14 +66,53 @@
     bemenu.enable = true;
     mpv.enable = true;
     zathura.enable = true;
+
+    lutris = {
+      enable = true;
+      package = pkgs.lutris;
+      extraPackages = with pkgs; [
+        gamemode
+        mangohud
+        winetricks
+        gamescope
+        umu-launcher
+      ];
+      steamPackage = pkgs.steam;
+      protonPackages = [
+        pkgs.proton-ge-bin
+      ];
+      winePackages = [
+        pkgs.wineWowPackages.waylandFull
+      ];
+      runners = {
+        dolphin.package = pkgs.dolphin-emu;
+        melonds.package = pkgs.melonDS;
+        cemu.package = pkgs.cemu;
+        citra.settings.runner.runner_executable = "${pkgs.azahar}/bin/azahar";
+      };
+    };
+
+    niri = {
+      enable = true;
+      package = pkgs.niri;
+      config = builtins.readFile ./dotfiles/niri/config.kdl;
+    };
   };
 
   services = {
     syncthing.enable = true;
     easyeffects.enable = true;
 
-    clipse.enable = true;
+    walker = {
+      enable = true;
+      settings = {
+        force_keyboard_focus = true;
+      };
+      systemd.enable = true;
+    };
+    cliphist.enable = true;
     mako.enable = true;
+    swww.enable = true;
 
     gammastep = {
       enable = true;
@@ -99,6 +131,9 @@
   xdg = {
     userDirs.enable = true;
     terminal-exec.enable = true;
+    portal.extraPortals = with pkgs; [
+      xdg-desktop-portal-termfilechooser
+    ];
     mimeApps = {
       enable = true;
       defaultApplications = {
@@ -122,198 +157,27 @@
 
   stylix = {
     enable = true;
-    autoEnable = true;
-    image = ./wallpaper.jpg;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    cursor = {
+      name = "Catppuccin-Mocha-Mauve-Cursors";
+      package = pkgs.catppuccin-cursors.mochaMauve;
+      size = 24;
+    };
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.zed-mono;
         name = "ZedMono NF Extd";
       };
     };
+    icons = {
+      package = pkgs.catppuccin-papirus-folders.override {
+        flavor = "mocha";
+        accent = "mauve";
+      };
+    };
     polarity = "dark";
     opacity = {
       terminal = 0.8;
     };
-  };
-
-  desktop = {
-    enable = true;
-    withUWSM = true;
-
-    startup = [
-      [
-        "foot"
-        "-s"
-      ]
-    ];
-
-    binds =
-      let
-        terminal = "foot";
-      in
-      [
-        {
-          description = "Open foot terminal";
-          command = [ "footclient" ];
-          bind = "Q";
-          modifiers = [ "super" ];
-        }
-        {
-          description = "Run applications with bemenu";
-          command = [
-            terminal
-            "bash"
-            "-c"
-            "'BEMENU_BACKEND=curses bemenu-run --fork --auto-select'"
-          ];
-          modifiers = [ "super" ];
-          bind = "R";
-          float = true;
-        }
-        {
-          description = "Launch file explorer yazi";
-          command = [
-            terminal
-            "-e"
-            "yazi"
-          ];
-          modifiers = [ "super" ];
-          bind = "E";
-          float = true;
-        }
-        {
-          description = "View clipboard history with clipse";
-          command = [
-            terminal
-            "-e"
-            "clipse"
-          ];
-          modifiers = [ "super" ];
-          bind = "B";
-          float = true;
-        }
-        {
-          description = "Annotate screenshots with satty";
-          command = ''grim -g "$(slurp)" - | satty -f - --fullscreen'';
-          modifiers = [ "super" ];
-          bind = "Print";
-        }
-        {
-          command = [
-            terminal
-            "-e"
-            "qalc"
-            "-s"
-            "autocalc"
-          ];
-          bind = "XF86Calculator";
-          float = true;
-        }
-        {
-          command = [
-            "makoctl"
-            "dismiss"
-            "-a"
-          ];
-          modifiers = [ "super" ];
-          bind = "ESCAPE";
-          locked = true;
-        }
-        {
-          command = [
-            "wpctl"
-            "set-volume"
-            "@DEFAULT_AUDIO_SINK@"
-            "1%+"
-          ];
-          bind = "XF86AudioRaiseVolume";
-          locked = true;
-        }
-        {
-          command = [
-            "wpctl"
-            "set-volume"
-            "@DEFAULT_AUDIO_SINK@"
-            "1%-"
-          ];
-          bind = "XF86AudioLowerVolume";
-          repeat = true;
-          locked = true;
-        }
-        {
-          command = [
-            "wpctl"
-            "set-mute"
-            "@DEFAULT_AUDIO_SINK@"
-            "toggle"
-          ];
-          bind = "XF86AudioMute";
-          locked = true;
-        }
-        {
-          command = [
-            "wpctl"
-            "set-mute"
-            "@DEFAULT_AUDIO_SOURCE@"
-            "toggle"
-          ];
-          bind = "XF86AudioMicMute";
-          locked = true;
-        }
-        {
-          command = [
-            "brightnessctl"
-            "s"
-            "1%+"
-          ];
-          bind = "XF86MonBrightnessUp";
-          repeat = true;
-          locked = true;
-        }
-        {
-          command = [
-            "brightnessctl"
-            "s"
-            "1%-"
-          ];
-          bind = "XF86MonBrightnessDown";
-          repeat = true;
-          locked = true;
-        }
-        {
-          command = [
-            "playerctl"
-            "next"
-          ];
-          bind = "XF86AudioNext";
-          locked = true;
-        }
-        {
-          command = [
-            "playerctl"
-            "play-pause"
-          ];
-          bind = "XF86AudioPause";
-          locked = true;
-        }
-        {
-          command = [
-            "playerctl"
-            "play-pause"
-          ];
-          bind = "XF86AudioPlay";
-          repeat = true;
-          locked = true;
-        }
-        {
-          command = [
-            "playerctl"
-            "previous"
-          ];
-          bind = "XF86AudioPrev";
-          repeat = true;
-          locked = true;
-        }
-      ];
   };
 }

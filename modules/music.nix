@@ -4,7 +4,7 @@
     with pkgs;
     [
       reaper
-      infamousPlugins
+#      infamousPlugins
 
       vital
       aether-lv2
@@ -13,7 +13,8 @@
       quadrafuzz
       fire
       guitarix
-      carla
+      # carla
+      sfizz
 
       yabridge
       yabridgectl
