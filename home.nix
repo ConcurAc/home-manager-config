@@ -7,6 +7,15 @@
     homeDirectory = "/home/connor";
     stateVersion = "25.05";
 
+    shell = {
+      enableNushellIntegration = true;
+    };
+
+    shellAliases = {
+      vi = "nvim";
+      vim = "nvim";
+    };
+
     packages = with pkgs; [
       brave
       zed-editor
@@ -18,6 +27,7 @@
       blender
       gimp3
       inkscape
+      krita
 
       oculante
       libqalculate
@@ -26,8 +36,7 @@
 
       brightnessctl
       playerctl
-      grim
-      slurp
+
       wl-clipboard-rs
 
       impala
@@ -59,10 +68,38 @@
         };
       };
     };
+    nushell = {
+      enable = true;
+      settings = {
+        show_banner = false;
+      };
+      extraConfig = ''
+        def --env y [...args] {
+          let tmp = (mktemp -t "yazi-cwd.XXXXXX")
+          yazi ...$args --cwd-file $tmp
+          let cwd = (open $tmp)
+          if $cwd != "" and $cwd != $env.PWD {
+            cd $cwd
+          }
+          rm -fp $tmp
+        }
+      '';
+    };
     foot = {
       enable = true;
       server.enable = true;
     };
+    eza.enable = true;
+    broot.enable = true;
+    atuin.enable = true;
+    intelli-shell.enable = true;
+    mise = {
+      enable = true;
+      settings = {
+        all_compile = false;
+      };
+    };
+    nix-your-shell.enable = true;
     bemenu.enable = true;
     mpv.enable = true;
     zathura.enable = true;
@@ -159,8 +196,8 @@
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     cursor = {
-      name = "Catppuccin-Mocha-Mauve-Cursors";
-      package = pkgs.catppuccin-cursors.mochaMauve;
+      name = "phinger-cursors-dark";
+      package = pkgs.phinger-cursors;
       size = 24;
     };
     fonts = {
@@ -170,10 +207,7 @@
       };
     };
     icons = {
-      package = pkgs.catppuccin-papirus-folders.override {
-        flavor = "mocha";
-        accent = "mauve";
-      };
+      package = pkgs.dracula-icon-theme;
     };
     polarity = "dark";
     opacity = {
