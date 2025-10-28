@@ -53,9 +53,9 @@ binds {
         spawn "walker" "-m" "applications";
     }
 
-    Mod+D hotkey-overlay-title="
-        Dismiss mako notifications
-    " repeat=false allow-when-locked=true { spawn "makoctl" "dismiss" "-a"; }
+    Mod+D hotkey-overlay-title="Dismiss mako notifications" repeat=false allow-when-locked=true {
+        spawn "makoctl" "dismiss" "-a";
+    }
 
     XF86Calculator repeat=false { spawn "footclient" "-e" "qalc" "-s" "autocalc"; }
 
