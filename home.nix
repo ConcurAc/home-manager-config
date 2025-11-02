@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -6,6 +6,11 @@
     username = "connor";
     homeDirectory = "/home/connor";
     stateVersion = "25.05";
+
+    sessionVariables = {
+      BROWSER = "brave";
+      TERMCMD = "footclient";
+    };
 
     shell = {
       enableNushellIntegration = true;
@@ -21,7 +26,6 @@
       zed-editor
       keepassxc
       webcord
-      flare-signal
 
       freecad-wayland
       blender
@@ -68,6 +72,7 @@
         };
       };
     };
+    bash.enable = true;
     nushell = {
       enable = true;
       settings = {
@@ -85,6 +90,7 @@
         }
       '';
     };
+
     foot = {
       enable = true;
       server.enable = true;
@@ -166,35 +172,38 @@
   };
 
   xdg = {
+    enable = true;
     userDirs.enable = true;
     terminal-exec.enable = true;
-    portal.extraPortals = with pkgs; [
-      xdg-desktop-portal-termfilechooser
-    ];
+    portal = {
+      enable = true;
+      config = {
+        common = {
+          "org.freedesktop.impl.portal.FileChooser" = [
+            "termfilechooser"
+          ];
+        };
+      };
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-termfilechooser
+      ];
+    };
     mimeApps = {
       enable = true;
-      defaultApplications = {
-        "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf.desktop" ];
-
-        "image/gif" = [
-          "oculante.desktop"
-        ];
-        "image/jpeg" = [
-          "oculante.desktop"
-        ];
-        "image/png" = [
-          "oculante.desktop"
-        ];
-        "image/webp" = [
-          "oculante.desktop"
-        ];
-      };
+      defaultApplicationPackages = with pkgs; [
+        yazi
+        zathura
+        oculante
+        mpv
+      ];
     };
   };
 
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = ./hephae-soft.yaml;
     cursor = {
       name = "phinger-cursors-dark";
       package = pkgs.phinger-cursors;

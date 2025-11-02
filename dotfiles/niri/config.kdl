@@ -41,6 +41,7 @@ input {
     }
 }
 
+spawn-at-startup "xwayland-satellite"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 
 binds {
