@@ -19,6 +19,10 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    retrom = {
+      url = "github:concurac/retrom/nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -28,6 +32,7 @@
       stylix,
       nixvim,
       niri,
+      retrom,
       ...
     }:
     let
@@ -41,6 +46,7 @@
           stylix.homeModules.stylix
           nixvim.homeModules.nixvim
           niri.homeModules.niri
+          retrom.homeModules.retrom
 
           ./home.nix
         ];

@@ -49,6 +49,7 @@
   };
 
   programs = {
+    retrom.enable = true;
     home-manager.enable = true;
     fish.enable = true;
     git = {
@@ -62,10 +63,6 @@
       enable = true;
       enableDefaultConfig = false;
       matchBlocks = {
-        "hub" = {
-          user = "connor";
-          identityFile = "~/.ssh/home";
-        };
         "github.com" = {
           user = "git";
           identityFile = "~/.ssh/git";
