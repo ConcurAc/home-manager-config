@@ -29,7 +29,12 @@ input {
         natural-scroll
     }
 
-    focus-follows-mouse max-scroll-amount="100%"
+     tablet {
+        map-to-output "eDP-1"
+        left-handed
+    }
+
+    focus-follows-mouse max-scroll-amount="80%"
 }
 
 /-gestures {

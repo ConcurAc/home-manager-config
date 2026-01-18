@@ -125,6 +125,7 @@
         pkgs.wineWowPackages.waylandFull
       ];
       runners = {
+        web.package = pkgs.electron-bin;
         dolphin.package = pkgs.dolphin-emu;
         melonds.package = pkgs.melonDS;
         cemu.package = pkgs.cemu;
@@ -182,15 +183,14 @@
         };
       };
       extraPortals = with pkgs; [
-        xdg-desktop-portal-wlr
         xdg-desktop-portal-gtk
+        xdg-desktop-portal-gnome
         xdg-desktop-portal-termfilechooser
       ];
     };
     mimeApps = {
       enable = true;
       defaultApplicationPackages = with pkgs; [
-        yazi
         zathura
         oculante
         mpv
