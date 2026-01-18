@@ -14,6 +14,7 @@
 
     shell = {
       enableNushellIntegration = true;
+      enableFishIntegration = true;
     };
 
     shellAliases = {
@@ -45,6 +46,8 @@
 
       impala
       bluetui
+
+      prismlauncher
     ];
   };
 
