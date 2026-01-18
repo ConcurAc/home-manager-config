@@ -101,7 +101,7 @@
     intelli-shell.enable = true;
     mise = {
       enable = true;
-      settings = {
+      globalConfig.settings = {
         all_compile = false;
       };
     };
