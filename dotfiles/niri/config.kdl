@@ -10,10 +10,6 @@ layout {
     proportion 0.5
     proportion 0.75
   }
-
-  border {
-    width 2
-  }
 }
 
 cursor {
@@ -29,21 +25,11 @@ input {
         natural-scroll
     }
 
-     tablet {
-        map-to-output "eDP-1"
+    tablet {
         left-handed
     }
 
     focus-follows-mouse max-scroll-amount="80%"
-}
-
-/-gestures {
-    hot-corners {
-        top-left
-        top-right
-        bottom-left
-        bottom-right
-    }
 }
 
 spawn-at-startup "xwayland-satellite"

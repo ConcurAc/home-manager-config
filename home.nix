@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  stable,
+  config,
+  pkgs,
+  ...
+}:
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -28,12 +33,6 @@
       keepassxc
       webcord
 
-      freecad-wayland
-      blender
-      gimp3
-      inkscape
-      krita
-
       oculante
       libqalculate
       satty
@@ -41,20 +40,20 @@
 
       brightnessctl
       playerctl
-
       wl-clipboard-rs
 
+      pw-viz
       impala
       bluetui
-
-      prismlauncher
     ];
+
+    file = {
+      ".config/niri/config.kdl".source = ./dotfiles/niri/config.kdl;
+    };
   };
 
   programs = {
-    retrom.enable = true;
     home-manager.enable = true;
-    fish.enable = true;
     git = {
       enable = true;
       settings.user = {
@@ -73,6 +72,7 @@
       };
     };
     bash.enable = true;
+    fish.enable = true;
     nushell = {
       enable = true;
       settings = {
@@ -99,48 +99,11 @@
     broot.enable = true;
     atuin.enable = true;
     intelli-shell.enable = true;
-    mise = {
-      enable = true;
-      globalConfig.settings = {
-        all_compile = false;
-      };
-    };
+    mise.enable = true;
     nix-your-shell.enable = true;
     bemenu.enable = true;
     mpv.enable = true;
     zathura.enable = true;
-
-    lutris = {
-      enable = true;
-      package = pkgs.lutris;
-      extraPackages = with pkgs; [
-        gamemode
-        mangohud
-        winetricks
-        gamescope
-        umu-launcher
-      ];
-      steamPackage = pkgs.steam;
-      protonPackages = [
-        pkgs.proton-ge-bin
-      ];
-      winePackages = [
-        pkgs.wineWowPackages.waylandFull
-      ];
-      runners = {
-        web.package = pkgs.electron-bin;
-        dolphin.package = pkgs.dolphin-emu;
-        melonds.package = pkgs.melonDS;
-        cemu.package = pkgs.cemu;
-        citra.settings.runner.runner_executable = "${pkgs.azahar}/bin/azahar";
-      };
-    };
-
-    niri = {
-      enable = true;
-      package = pkgs.niri;
-      config = builtins.readFile ./dotfiles/niri/config.kdl;
-    };
   };
 
   services = {
