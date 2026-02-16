@@ -286,11 +286,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771218905,
-        "narHash": "sha256-mC7X+d/riPVOGt21xWggyRaWXtllUkxTYckJcBl7Br8=",
+        "lastModified": 1771223496,
+        "narHash": "sha256-VM4QaqJlzwT/JXxKBop95wWQy4nH1LFo/GT06L5bbo0=",
         "owner": "concurac",
         "repo": "retrom",
-        "rev": "0821232784b8f5f0ff125951b0c4f843dbef3b48",
+        "rev": "6da9d9574349ada566d96d505b66382ae982ee66",
         "type": "github"
       },
       "original": {
