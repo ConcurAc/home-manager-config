@@ -9,6 +9,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,6 +33,7 @@
       nixpkgs-stable,
 
       home-manager,
+      sops-nix,
       stylix,
       nixvim,
       retrom,
@@ -50,6 +55,7 @@
             };
 
             modules = [
+              sops-nix.homeModules.sops
               stylix.homeModules.stylix
               nixvim.homeModules.nixvim
               retrom.homeModules.retrom
@@ -73,6 +79,7 @@
             };
 
             modules = [
+              sops-nix.homeModules.sops
               stylix.homeModules.stylix
               nixvim.homeModules.nixvim
 

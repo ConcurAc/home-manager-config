@@ -1,11 +1,29 @@
 {
-  stable,
   config,
   pkgs,
   ...
 }:
 {
   nixpkgs.config.allowUnfree = true;
+
+  sops = {
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    defaultSopsFile = ./secrets.yaml;
+    secrets = {
+      "ssh/default.pub" = {
+        path = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+      };
+      "ssh/default" = {
+        path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+      };
+      "ssh/git.pub" = {
+        path = "${config.home.homeDirectory}/.ssh/git.pub";
+      };
+      "ssh/git" = {
+        path = "${config.home.homeDirectory}/.ssh/git";
+      };
+    };
+  };
 
   home = {
     username = "connor";
@@ -58,7 +76,7 @@
       enable = true;
       settings.user = {
         name = "Connor Davis";
-        email = "concurac@proton.me";
+        email = "connor@scequ.com";
       };
     };
     ssh = {
