@@ -33,7 +33,6 @@ input {
 }
 
 spawn-at-startup "xwayland-satellite"
-spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 
 binds {
     Mod+Q hotkey-overlay-title="Open foot terminal" repeat=false { spawn "footclient"; }
@@ -42,7 +41,7 @@ binds {
     }
 
     Mod+R hotkey-overlay-title="Run applications with walker" repeat=false {
-        spawn "vicinae" "open";
+        spawn "vicinae" "toggle";
     }
 
     Mod+D hotkey-overlay-title="Dismiss mako notifications" repeat=false allow-when-locked=true {

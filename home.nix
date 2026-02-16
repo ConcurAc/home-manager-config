@@ -59,7 +59,6 @@
 
       brightnessctl
       playerctl
-      wl-clipboard-rs
 
       pw-viz
       impala
@@ -124,6 +123,9 @@
     vicinae = {
       enable = true;
       systemd.enable = true;
+      settings = {
+        font.normal.family = "system";
+      };
     };
     mpv.enable = true;
     zathura.enable = true;
@@ -133,7 +135,6 @@
     syncthing.enable = true;
     easyeffects.enable = true;
 
-    cliphist.enable = true;
     mako.enable = true;
     swww.enable = true;
 
