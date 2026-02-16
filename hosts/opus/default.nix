@@ -30,12 +30,12 @@
               pkgs.proton-ge-bin
             ];
             winePackages = [
-              pkgs.wineWowPackages.waylandFull
+              pkgs.wineWow64Packages.waylandFull
             ];
             runners = {
               web.package = pkgs.electron-bin;
               dolphin.package = pkgs.dolphin-emu;
-              melonds.package = pkgs.melonDS;
+              melonds.package = pkgs.melonds;
               cemu.package = pkgs.cemu;
               citra.settings.runner.runner_executable = "${pkgs.azahar}/bin/azahar";
             };
