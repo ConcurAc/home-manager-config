@@ -84,8 +84,8 @@
         };
         packages = with pkgs; [
           reaper
-          yabridgectl
-          yabridge
+          pkgs-stable.yabridgectl
+          pkgs-stable.yabridge
           vital
           aether-lv2
           dragonfly-reverb

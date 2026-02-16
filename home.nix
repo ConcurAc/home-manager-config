@@ -50,6 +50,7 @@
       zed-editor
       keepassxc
       webcord
+      thunderbird
 
       oculante
       libqalculate
