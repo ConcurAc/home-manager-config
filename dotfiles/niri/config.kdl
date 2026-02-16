@@ -42,7 +42,7 @@ binds {
     }
 
     Mod+R hotkey-overlay-title="Run applications with walker" repeat=false {
-        spawn "walker" "-m" "applications";
+        spawn "vicinae" "open";
     }
 
     Mod+D hotkey-overlay-title="Dismiss mako notifications" repeat=false allow-when-locked=true {

@@ -109,17 +109,21 @@
       '';
     };
 
-    foot = {
-      enable = true;
-      server.enable = true;
-    };
     eza.enable = true;
     broot.enable = true;
     atuin.enable = true;
     intelli-shell.enable = true;
     mise.enable = true;
     nix-your-shell.enable = true;
-    bemenu.enable = true;
+
+    foot = {
+      enable = true;
+      server.enable = true;
+    };
+    vicinae = {
+      enable = true;
+      systemd.enable = true;
+    };
     mpv.enable = true;
     zathura.enable = true;
   };
@@ -128,13 +132,6 @@
     syncthing.enable = true;
     easyeffects.enable = true;
 
-    walker = {
-      enable = true;
-      settings = {
-        force_keyboard_focus = true;
-      };
-      systemd.enable = true;
-    };
     cliphist.enable = true;
     mako.enable = true;
     swww.enable = true;
