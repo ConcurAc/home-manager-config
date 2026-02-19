@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   ...
 }:
@@ -11,6 +12,14 @@
             prismlauncher
             daggerfall-unity
             openmw
+
+            dolphin-emu
+            melonds
+            cemu
+            ppsspp-sdl-wayland
+            azahar
+
+            shadps4
           ];
         };
         programs = {
@@ -37,8 +46,14 @@
               dolphin.package = pkgs.dolphin-emu;
               melonds.package = pkgs.melonds;
               cemu.package = pkgs.cemu;
-              citra.settings.runner.runner_executable = "${pkgs.azahar}/bin/azahar";
+              ppsspp.package = pkgs.ppsspp-sdl-wayland;
+              citra.settings.runner.runner_executable = lib.getExe pkgs.azahar;
+
             };
+          };
+          retrom = {
+            enable = true;
+            supportNvidia = true;
           };
         };
       };
