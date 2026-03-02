@@ -1,108 +1,22 @@
 {
-  config,
-  lib,
-  pkgs,
-  pkgs-stable,
-  ...
-}:
-{
   specialisation = {
-    gaming = {
-      configuration = {
-        home = {
-          packages = with pkgs; [
-            prismlauncher
-            daggerfall-unity
-            openmw
-
-            dolphin-emu
-            melonds
-            cemu
-            azahar
-            ppsspp-sdl-wayland
-            shadps4
-          ];
-        };
-        programs = {
-          lutris = {
-            enable = true;
-            package = pkgs.lutris;
-            extraPackages = with pkgs; [
-              gamemode
-              mangohud
-              winetricks
-              gamescope
-              umu-launcher
-              shadps4
-            ];
-            steamPackage = pkgs.steam;
-            protonPackages = [
-              pkgs.proton-ge-bin
-            ];
-            winePackages = [
-              pkgs.wineWow64Packages.waylandFull
-            ];
-            runners = {
-              web.package = pkgs.electron-bin;
-              dolphin.package = pkgs.dolphin-emu;
-              melonds.package = pkgs.melonds;
-              cemu.package = pkgs.cemu;
-              ppsspp.package = pkgs.ppsspp-sdl-wayland;
-              citra.settings.runner.runner_executable = lib.getExe pkgs.azahar;
-
-            };
-          };
-          retrom.enable = true;
-        };
-      };
+    gaming.configuration = {
+      imports = [ ../../modules/gaming.nix ];
     };
     productivity.configuration = {
-      home = {
-        packages = with pkgs; [
-          blender
-          gimp3
-          inkscape
-          krita
-        ];
-      };
-    };
-    development.configuration = {
-      home = {
-        sessionVariables = {
-          CARGO_HOME = "~/.local/share/cargo";
-          RUSTUP_HOME = "~/.local/share/rustup";
-        };
-        packages = with pkgs; [
-          rustup
-        ];
-      };
-    };
-    engineering.configuration = {
-      home = {
-        sessionVariables = {
-          JULIA_HOME = "~/.local/share/julia";
-        };
-        packages = with pkgs; [
-          pkgs-stable.freecad-wayland
-          julia-bin
-        ];
-      };
+      imports = [ ../../modules/productivity.nix ];
     };
     music.configuration = {
-      home = {
-        sessionVariables = {
-          WINEPREFIX = "${config.home.homeDirectory}/.prefix/music";
-        };
-        packages = with pkgs; [
-          reaper
-          pkgs-stable.yabridgectl
-          pkgs-stable.yabridge
-          vital
-          aether-lv2
-          dragonfly-reverb
-          sfizz
-        ];
-      };
+      imports = [ ../../modules/music.nix ];
+    };
+    development.configuration = {
+      imports = [ ../../modules/development.nix ];
+    };
+    engineering.configuration = {
+      imports = [ ../../modules/engineering.nix ];
+    };
+    security.configuration = {
+      imports = [ ../../modules/security.nix ];
     };
   };
 }
