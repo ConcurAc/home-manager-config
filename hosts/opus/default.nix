@@ -1,7 +1,3 @@
 {
-  specialisation = {
-    gaming.configuration = {
-      imports = [ ../../modules/gaming.nix ];
-    };
-  };
+  imports = [ ../../modules/gaming.nix ];
 }
