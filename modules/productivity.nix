@@ -6,6 +6,9 @@
       gimp3
       inkscape
       krita
+      libreoffice-fresh
+
+      hunspellDicts.en-au-large
     ];
   };
 }

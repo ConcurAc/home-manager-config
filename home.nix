@@ -1,6 +1,8 @@
 {
   config,
+  lib,
   pkgs,
+  pkgs-stable,
   ...
 }:
 {
@@ -36,7 +38,6 @@
     };
 
     shell = {
-      enableNushellIntegration = true;
       enableFishIntegration = true;
     };
 
@@ -48,11 +49,11 @@
     packages = with pkgs; [
       brave
       zed-editor
-      keepassxc
-      webcord
+      geary
+      dino
       thunderbird
 
-      oculante
+      pkgs-stable.oculante
       libqalculate
       satty
       file-roller
@@ -91,23 +92,8 @@
     };
     bash.enable = true;
     fish.enable = true;
-    nushell = {
-      enable = true;
-      settings = {
-        show_banner = false;
-      };
-      extraConfig = ''
-        def --env y [...args] {
-          let tmp = (mktemp -t "yazi-cwd.XXXXXX")
-          yazi ...$args --cwd-file $tmp
-          let cwd = (open $tmp)
-          if $cwd != "" and $cwd != $env.PWD {
-            cd $cwd
-          }
-          rm -fp $tmp
-        }
-      '';
-    };
+
+    helix.enable = true;
 
     eza.enable = true;
     broot.enable = true;
@@ -127,8 +113,42 @@
         font.normal.family = "system";
       };
     };
+
     mpv.enable = true;
     zathura.enable = true;
+    halloy.enable = true;
+
+    mcp = {
+      enable = true;
+      servers = {
+        nixos.command = lib.getExe pkgs.mcp-nixos;
+      };
+    };
+
+    opencode = {
+      enable = true;
+      enableMcpIntegration = true;
+      settings = {
+        provider = {
+          "llama-swap" = {
+            npm = "@ai-sdk/openai-compatible";
+            models = {
+              "Qwen3.5 Uncensored" = {
+                name = "qwen3.5-9b-uncensored";
+                tool_call = true;
+                reasoning = true;
+              };
+              "Gemma 4 Uncensored" = {
+                name = "gemma-4-e4b-uncensored";
+                tool_call = true;
+                reasoning = true;
+              };
+            };
+            options.baseURL = "https://llama.home.arpa/v1";
+          };
+        };
+      };
+    };
   };
 
   services = {
@@ -174,8 +194,9 @@
     mimeApps = {
       enable = true;
       defaultApplicationPackages = with pkgs; [
+        yazi
         zathura
-        oculante
+        pkgs-stable.oculante
         mpv
       ];
     };
@@ -190,13 +211,27 @@
       size = 24;
     };
     fonts = {
+      serif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Serif";
+      };
+      sansSerif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Sans";
+      };
       monospace = {
         package = pkgs.nerd-fonts.zed-mono;
         name = "ZedMono NF Extd";
       };
+      emoji = {
+        package = pkgs.noto-fonts-color-emoji;
+        name = "Noto Color Emoji";
+      };
     };
     icons = {
+      enable = true;
       package = pkgs.dracula-icon-theme;
+      dark = "Dracula";
     };
     polarity = "dark";
     opacity = {

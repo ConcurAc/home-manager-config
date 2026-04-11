@@ -12,13 +12,39 @@
 
       dolphin-emu
       melonds
-      cemu
       azahar
+      cemu
+      eden
       ppsspp-sdl-wayland
       shadps4
     ];
   };
   programs = {
+    retroarch = {
+      enable = true;
+      cores = with pkgs.libretro; {
+        "mGBA" = {
+          enable = true;
+          package = mgba;
+        };
+        "Mupen64 Plus" = {
+          enable = true;
+          package = mupen64plus;
+        };
+        "Dolphin" = {
+          enable = true;
+          package = dolphin;
+        };
+        "melonDS" = {
+          enable = true;
+          package = melonds;
+        };
+        "PPSSPP" = {
+          enable = true;
+          package = ppsspp;
+        };
+      };
+    };
     lutris = {
       enable = true;
       package = pkgs.lutris;

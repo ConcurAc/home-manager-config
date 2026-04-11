@@ -8,6 +8,8 @@
       pkgs-stable.freecad-wayland
       kicad
       julia-bin
+
+      orca-slicer
     ];
   };
 }
