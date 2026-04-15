@@ -22,7 +22,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     retrom = {
-      url = "github:JMBeresford/retrom";
+      url = "github:JMBeresford/retrom/v0.8.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -39,6 +39,9 @@
       retrom,
       ...
     }:
+    let
+      jobs = import ./jobs;
+    in
     {
       homeConfigurations = {
         "connor@effigy" =
@@ -51,7 +54,7 @@
             inherit pkgs;
 
             extraSpecialArgs = {
-              inherit pkgs-stable;
+              inherit pkgs-stable jobs;
             };
 
             modules = [
@@ -75,7 +78,7 @@
             inherit pkgs;
 
             extraSpecialArgs = {
-              inherit pkgs-stable;
+              inherit pkgs-stable jobs;
             };
 
             modules = [

@@ -2,8 +2,8 @@
 {
   home = {
     sessionVariables = {
-      CARGO_HOME = "~/.local/share/cargo";
-      RUSTUP_HOME = "~/.local/share/rustup";
+      CARGO_HOME = "$HOME/.local/share/cargo";
+      RUSTUP_HOME = "$HOME/.local/share/rustup";
     };
     packages = with pkgs; [
       rustup

@@ -1,10 +1,11 @@
+{ jobs, ... }:
 {
   imports = [
-    ../../modules/gaming.nix
-    ../../modules/productivity.nix
-    ../../modules/music.nix
-    ../../modules/development.nix
-    ../../modules/engineering.nix
-    ../../modules/security.nix
+    jobs.gaming
+    jobs.productivity
+    jobs.music
+    jobs.development
+    jobs.engineering
+    jobs.security
   ];
 }

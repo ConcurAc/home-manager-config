@@ -1,3 +1,4 @@
+{ jobs, ... }:
 {
-  imports = [ ../../modules/gaming.nix ];
+  imports = [ jobs.gaming ];
 }
