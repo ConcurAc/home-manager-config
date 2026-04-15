@@ -5,6 +5,10 @@
   pkgs-stable,
   ...
 }:
+let
+  secrets = config.sops.secrets;
+  name = "connor";
+in
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -24,12 +28,15 @@
       "ssh/git" = {
         path = "${config.home.homeDirectory}/.ssh/git";
       };
+      "crypt/archives" = { };
+      "crypt/media" = { };
+      "crypt/games" = { };
     };
   };
 
   home = {
-    username = "connor";
-    homeDirectory = "/home/connor";
+    username = name;
+    homeDirectory = "/home/${name}";
     stateVersion = "25.05";
 
     sessionVariables = {
@@ -238,4 +245,43 @@
       terminal = 0.8;
     };
   };
+
+  systemd.user = lib.mergeAttrsList (
+    map
+      (
+        f:
+        let
+          module = "srv-users-${name}-${f}";
+          gocryptfs = lib.getExe' pkgs.gocryptfs "gocryptfs";
+        in
+        {
+          mounts.${module} = {
+            Unit.Description = "${f} mount";
+
+            Mount = {
+              What = "${gocryptfs}#/srv/users/${name}/.crypt/@${f}";
+              Where = "/srv/users/${name}/${f}";
+              Type = "fuse";
+              Options = "passfile=${secrets."crypt/${f}".path}";
+            };
+
+            Install.WantedBy = [ "default.target" ];
+          };
+          automounts.${module} = {
+            Unit.Description = "${f} automount";
+
+            Automount = {
+              Where = "/srv/users/${name}/${f}";
+            };
+
+            Install.WantedBy = [ "default.target" ];
+          };
+        }
+      )
+      [
+        "archives"
+        "media"
+        "games"
+      ]
+  );
 }
