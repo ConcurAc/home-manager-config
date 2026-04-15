@@ -37,7 +37,7 @@ in
   home = {
     username = name;
     homeDirectory = "/home/${name}";
-    stateVersion = "25.05";
+    stateVersion = "26.05";
 
     sessionVariables = {
       BROWSER = "brave";
@@ -163,7 +163,7 @@ in
     easyeffects.enable = true;
 
     mako.enable = true;
-    swww.enable = true;
+    awww.enable = true;
 
     gammastep = {
       enable = true;
@@ -181,7 +181,10 @@ in
 
   xdg = {
     enable = true;
-    userDirs.enable = true;
+    userDirs = {
+      enable = true;
+      setSessionVariables = true;
+    };
     terminal-exec.enable = true;
     portal = {
       enable = true;
