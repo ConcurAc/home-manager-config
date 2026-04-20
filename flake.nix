@@ -22,7 +22,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     retrom = {
-      url = "github:JMBeresford/retrom/v0.8.0";
+      url = "github:JMBeresford/retrom/latest";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
