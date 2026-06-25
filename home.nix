@@ -40,6 +40,8 @@ in
     stateVersion = "26.05";
 
     sessionVariables = {
+      EDITOR = "hx";
+      VISUAL = "zeditor";
       BROWSER = "brave";
       TERMCMD = "footclient";
     };
@@ -57,15 +59,18 @@ in
       brave
       geary
       dino
+      webcord
       thunderbird
 
-      pkgs-stable.oculante
+      oculante
       libqalculate
       satty
       file-roller
 
       brightnessctl
       playerctl
+      pass-wayland
+      xwayland-satellite
 
       pw-viz
       impala
@@ -133,7 +138,7 @@ in
     ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks = {
+      settings = {
         "github.com" = {
           user = "git";
           identityFile = "~/.ssh/git";
@@ -143,14 +148,15 @@ in
     bash.enable = true;
     fish.enable = true;
 
-    helix.enable = true;
-
     eza.enable = true;
     broot.enable = true;
     atuin.enable = true;
     intelli-shell.enable = true;
     mise.enable = true;
     nix-your-shell.enable = true;
+
+    yazi.enable = true;
+    helix.enable = true;
 
     foot = {
       enable = true;
@@ -175,7 +181,10 @@ in
     mcp = {
       enable = true;
       servers = {
-        nixos.command = lib.getExe pkgs.mcp-nixos;
+        mcp-nixos = {
+          command = lib.getExe pkgs.mcp-nixos;
+          args = [ "--" ];
+        };
       };
     };
 
@@ -195,7 +204,6 @@ in
               name = "Gemma 4 e4b Uncensored";
               tool_call = true;
             };
-            options.baseURL = "https://llama.home.arpa/v1";
           };
         };
       };
@@ -243,24 +251,27 @@ in
       enable = true;
       config = {
         common = {
+          "default" = [ "gnome" ];
           "org.freedesktop.impl.portal.FileChooser" = [
             "termfilechooser"
           ];
         };
       };
       extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
         xdg-desktop-portal-gnome
+        xdg-desktop-portal-gtk
         xdg-desktop-portal-termfilechooser
       ];
     };
     mimeApps = {
       enable = true;
       defaultApplicationPackages = with pkgs; [
+        foot
         yazi
-        zathura
-        pkgs-stable.oculante
         mpv
+        file-roller
+        zathura
+        oculante
       ];
     };
   };
@@ -268,6 +279,7 @@ in
   stylix = {
     enable = true;
     base16Scheme = ./hephae-soft.yaml;
+    polarity = "dark";
     cursor = {
       name = "phinger-cursors-dark";
       package = pkgs.phinger-cursors;
@@ -296,48 +308,8 @@ in
       package = pkgs.dracula-icon-theme;
       dark = "Dracula";
     };
-    polarity = "dark";
     opacity = {
       terminal = 0.8;
     };
   };
-
-  systemd.user = lib.mergeAttrsList (
-    map
-      (
-        f:
-        let
-          module = "srv-users-${name}-${f}";
-          gocryptfs = lib.getExe' pkgs.gocryptfs "gocryptfs";
-        in
-        {
-          mounts.${module} = {
-            Unit.Description = "${f} mount";
-
-            Mount = {
-              What = "${gocryptfs}#/srv/users/${name}/.crypt/@${f}";
-              Where = "/srv/users/${name}/${f}";
-              Type = "fuse";
-              Options = "passfile=${secrets."crypt/${f}".path}";
-            };
-
-            Install.WantedBy = [ "default.target" ];
-          };
-          automounts.${module} = {
-            Unit.Description = "${f} automount";
-
-            Automount = {
-              Where = "/srv/users/${name}/${f}";
-            };
-
-            Install.WantedBy = [ "default.target" ];
-          };
-        }
-      )
-      [
-        "archives"
-        "media"
-        "games"
-      ]
-  );
 }
