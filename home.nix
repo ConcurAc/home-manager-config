@@ -78,6 +78,50 @@ in
     };
   };
 
+  accounts = {
+    email = {
+      accounts = {
+        connor = {
+          address = "connor@scequ.com";
+          userName = "connor@scequ.com";
+          realName = "Connor Davis";
+          passwordCommand = "pass email/connor@scequ.com";
+
+          primary = true;
+
+          gpg = {
+            key = "BB2DDC4B16831A49D56DB6A5095D786B07813F06";
+            signByDefault = true;
+            encryptByDefault = true;
+          };
+
+          imap = {
+            host = "mail.scequ.com";
+            port = 993;
+            tls.enable = true;
+          };
+
+          smtp = {
+            host = "mail.scequ.com";
+            port = 465;
+            tls.enable = true;
+          };
+
+          meli = {
+            enable = true;
+            settings = {
+              format = "imap";
+              server_hostname = "mail.scequ.com";
+              server_port = 993;
+              server_username = "connor@scequ.com";
+              server_password_command = "pass email/connor@scequ.com";
+            };
+          };
+        };
+      };
+    };
+  };
+
   programs = {
     home-manager.enable = true;
     git = {
