@@ -55,7 +55,6 @@ in
 
     packages = with pkgs; [
       brave
-      zed-editor
       geary
       dino
       thunderbird
@@ -200,6 +199,11 @@ in
           };
         };
       };
+    };
+
+    zed-editor = {
+      enable = true;
+      enableMcpIntegration = true;
     };
   };
 
