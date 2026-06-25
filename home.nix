@@ -184,20 +184,17 @@ in
       enable = true;
       enableMcpIntegration = true;
       settings = {
-        provider = {
-          "llama-swap" = {
-            npm = "@ai-sdk/openai-compatible";
-            models = {
-              "Qwen3.5 Uncensored" = {
-                name = "qwen3.5-9b-uncensored";
-                tool_call = true;
-                reasoning = true;
-              };
-              "Gemma 4 Uncensored" = {
-                name = "gemma-4-e4b-uncensored";
-                tool_call = true;
-                reasoning = true;
-              };
+        provider.llama-swap = {
+          npm = "@ai-sdk/openai-compatible";
+          name = "Local";
+          options = {
+            baseURL = "https://llama.home.arpa/v1";
+          };
+          models = {
+            "gemma-4-e4b-uncensored" = {
+              id = "gemma-4-e4b-uncensored";
+              name = "Gemma 4 e4b Uncensored";
+              tool_call = true;
             };
             options.baseURL = "https://llama.home.arpa/v1";
           };
