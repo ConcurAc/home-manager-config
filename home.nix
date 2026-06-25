@@ -166,8 +166,12 @@ in
     };
 
     mpv.enable = true;
-    zathura.enable = true;
-    halloy.enable = true;
+    zathura = {
+      enable = true;
+      extraConfig = ''
+        set selection-clipboard clipboard
+      '';
+    };
 
     mcp = {
       enable = true;
