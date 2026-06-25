@@ -216,6 +216,10 @@ in
 
     gammastep = {
       enable = true;
+      temperature = {
+        day = 4000;
+        night = 2500;
+      };
       dawnTime = "6:00-7:45";
       duskTime = "18:35-20:15";
     };
