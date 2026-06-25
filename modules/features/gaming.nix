@@ -1,11 +1,13 @@
 {
   lib,
   pkgs,
+  pkgs-stable,
   ...
 }:
 {
   home = {
     packages = with pkgs; [
+      heroic
       prismlauncher
       daggerfall-unity
       openmw
@@ -13,7 +15,7 @@
       dolphin-emu
       melonds
       azahar
-      cemu
+      pkgs-stable.cemu
       eden
       ppsspp-sdl-wayland
       shadps4
@@ -67,15 +69,15 @@
         web.package = pkgs.electron-bin;
         dolphin.package = pkgs.dolphin-emu;
         melonds.package = pkgs.melonds;
-        cemu.package = pkgs.cemu;
+        cemu.package = pkgs-stable.cemu;
         ppsspp.package = pkgs.ppsspp-sdl-wayland;
         citra.settings.runner.runner_executable = lib.getExe pkgs.azahar;
-
+        libretro.package = pkgs.retroarch;
       };
     };
     retrom = {
-      enable = true;
-      supportNvidia = true;
+      # enable = true;
+      # supportNvidia = true;
     };
   };
 }

@@ -13,10 +13,6 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,12 +31,11 @@
       home-manager,
       sops-nix,
       stylix,
-      nixvim,
       retrom,
       ...
     }:
     let
-      jobs = import ./jobs;
+      modules = import ./modules;
     in
     {
       homeConfigurations = {
@@ -54,13 +49,12 @@
             inherit pkgs;
 
             extraSpecialArgs = {
-              inherit pkgs-stable jobs;
+              inherit pkgs-stable modules;
             };
 
             modules = [
               sops-nix.homeModules.sops
               stylix.homeModules.stylix
-              nixvim.homeModules.nixvim
               retrom.homeModules.retrom
 
               ./hosts/effigy
@@ -78,13 +72,12 @@
             inherit pkgs;
 
             extraSpecialArgs = {
-              inherit pkgs-stable jobs;
+              inherit pkgs-stable modules;
             };
 
             modules = [
               sops-nix.homeModules.sops
               stylix.homeModules.stylix
-              nixvim.homeModules.nixvim
 
               ./hosts/opus
               ./home.nix

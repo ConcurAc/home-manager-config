@@ -1,4 +1,6 @@
-{ jobs, ... }:
+{ modules, ... }:
 {
-  imports = [ jobs.gaming ];
+  imports = with modules; [
+    gaming
+  ];
 }
