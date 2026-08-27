@@ -30,10 +30,14 @@ in
         type = lib.types.bool;
         default = true;
       };
+      goPath = lib.mkOption {
+        type = lib.types.str;
+        default = "$HOME/.local/share/go";
+      };
     };
     arduino = {
       enable = lib.mkEnableOption "Configure arduino development toolchain";
-      arduinoHome = lib.mkOption {
+      arduinoData = lib.mkOption {
         type = lib.types.str;
         default = "$HOME/.local/share/arduino";
       };
@@ -45,7 +49,8 @@ in
       sessionVariables = {
         CARGO_HOME = lib.mkIf cfg.rust.enable cfg.rust.cargoHome;
         RUSTUP_HOME = lib.mkIf cfg.rust.enable cfg.rust.rustupHome;
-        ARDUINO_DIRECTORIES_DATA = lib.mkIf cfg.arduino.enable cfg.arduino.arduinoHome;
+        GOPATH = lib.mkIf cfg.go.enable cfg.go.goPath;
+        ARDUINO_DIRECTORIES_DATA = lib.mkIf cfg.arduino.enable cfg.arduino.arduinoData;
       };
       packages =
         (lib.optional (cfg.rust.enable) pkgs.cargo)
