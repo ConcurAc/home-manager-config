@@ -9,6 +9,12 @@
     security
   ];
 
+  features.development = {
+    rust.enable = true;
+    go.enable = true;
+    arduino.enable = true;
+  };
+
   programs.sftpman = {
     enable = true;
     defaultSshKey = "~/.ssh/id_ed25519";
