@@ -24,6 +24,10 @@
       enable = true;
       arduinoData = "$HOME/.local/share/arduino";
     };
+    esp = {
+      enable = true;
+      exportFile = "$HOME/.cache/export-esp.sh";
+    };
   };
 
   programs.sftpman = {
