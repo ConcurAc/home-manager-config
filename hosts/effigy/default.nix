@@ -10,9 +10,20 @@
   ];
 
   features.development = {
-    rust.enable = true;
-    go.enable = true;
-    arduino.enable = true;
+    rust = {
+      enable = true;
+      cargoHome = "$HOME/.local/share/cargo";
+      rustupHome = "$HOME/.local/share/rustup";
+    };
+    go = {
+      enable = true;
+      goPath = "$HOME/.local/share/go";
+      goModCache = "$HOME/.cache/go/pkg/mod";
+    };
+    arduino = {
+      enable = true;
+      arduinoData = "$HOME/.local/share/arduino";
+    };
   };
 
   programs.sftpman = {
