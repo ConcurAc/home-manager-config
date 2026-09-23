@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   lib,
   pkgs,
@@ -56,10 +57,16 @@ in
 
     packages = with pkgs; [
       brave
-      geary
       dino
+      rnote
       webcord
       thunderbird
+      trilium-desktop
+      calibre
+
+      inputs.amm.packages.${pkgs.stdenv.system}.default
+      file
+      umu-launcher
 
       oculante
       libqalculate
@@ -151,11 +158,9 @@ in
     broot.enable = true;
     atuin.enable = true;
     intelli-shell.enable = true;
-    mise.enable = true;
     nix-your-shell.enable = true;
-
-    yazi.enable = true;
     helix.enable = true;
+    meli.enable = true;
 
     foot = {
       enable = true;
@@ -165,7 +170,7 @@ in
       enable = true;
       systemd.enable = true;
       settings = {
-        font.normal.family = "system";
+        font.normal.family = lib.mkForce "system";
       };
     };
 
@@ -182,7 +187,20 @@ in
       servers = {
         mcp-nixos = {
           command = lib.getExe pkgs.mcp-nixos;
-          args = [ "--" ];
+          args = [ ];
+        };
+        mcp-server-git = {
+          command = lib.getExe pkgs.mcp-server-git;
+          args = [ ];
+        };
+        web-search = {
+          command = lib.getExe pkgs.open-websearch;
+          args = [ ];
+          env = {
+            MODE = "stdio";
+            DEFAULT_SEARCH_ENGINE = "brave";
+            ALLOWED_SEARCH_ENGINES = "brave,duckduckgo,bing";
+          };
         };
       };
     };
@@ -191,6 +209,11 @@ in
       enable = true;
       enableMcpIntegration = true;
       settings = {
+        lsp = true;
+        plugin = [
+          "superpowers@git+https://github.com/obra/superpowers.git"
+          "opencode-power-pack@git+https://github.com/waybarrios/opencode-power-pack.git"
+        ];
         provider.llama-swap = {
           npm = "@ai-sdk/openai-compatible";
           name = "Local";
@@ -198,9 +221,14 @@ in
             baseURL = "https://llama.home.arpa/v1";
           };
           models = {
-            "gemma-4-e4b-uncensored" = {
-              id = "gemma-4-e4b-uncensored";
-              name = "Gemma 4 e4b Uncensored";
+            "gemma-4-12b-qat" = {
+              id = "gemma-4-12b-qat";
+              name = "Gemma 4 12B QAT";
+              tool_call = true;
+            };
+            "qwopus3.5-9b-coder-mtp" = {
+              id = "qwopus3.5-9b-coder-mtp";
+              name = "Qwopus3.5 9B Coder MTP";
               tool_call = true;
             };
           };
@@ -269,8 +297,8 @@ in
         yazi
         mpv
         file-roller
-        zathura
         oculante
+        zathura
       ];
     };
   };

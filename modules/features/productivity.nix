@@ -6,7 +6,7 @@
       gimp3
       inkscape
       krita
-      libreoffice-fresh
+      libreoffice
 
       hunspellDicts.en-au-large
     ];

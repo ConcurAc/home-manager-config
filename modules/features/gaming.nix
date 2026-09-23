@@ -1,22 +1,20 @@
-{
-  lib,
-  pkgs,
-  pkgs-stable,
-  ...
-}:
+{ pkgs, ... }:
 {
   home = {
     packages = with pkgs; [
+      gamescope
       heroic
       prismlauncher
       daggerfall-unity
       openmw
+      ukmm
 
       dolphin-emu
       melonds
       azahar
-      pkgs-stable.cemu
+      cemu
       eden
+
       ppsspp-sdl-wayland
       shadps4
     ];
@@ -39,7 +37,7 @@
         };
         "melonDS" = {
           enable = true;
-          package = melonds;
+          package = melondsds;
         };
         "PPSSPP" = {
           enable = true;
@@ -56,7 +54,7 @@
         winetricks
         gamescope
         umu-launcher
-        shadps4
+        vulkan-tools
       ];
       steamPackage = pkgs.steam;
       protonPackages = [
@@ -69,15 +67,13 @@
         web.package = pkgs.electron-bin;
         dolphin.package = pkgs.dolphin-emu;
         melonds.package = pkgs.melonds;
-        cemu.package = pkgs-stable.cemu;
+        cemu.package = pkgs.cemu;
         ppsspp.package = pkgs.ppsspp-sdl-wayland;
-        citra.settings.runner.runner_executable = lib.getExe pkgs.azahar;
-        libretro.package = pkgs.retroarch;
+        citra.package = pkgs.azahar;
+        yuzu.package = pkgs.eden;
+        shadps4.package = pkgs.shadps4;
       };
     };
-    retrom = {
-      # enable = true;
-      # supportNvidia = true;
-    };
+    retrom.enable = true;
   };
 }
