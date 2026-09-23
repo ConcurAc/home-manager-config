@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  pkgs-stable,
   ...
 }:
 {
@@ -11,8 +10,8 @@
     };
     packages = with pkgs; [
       reaper
-      pkgs-stable.yabridgectl
-      pkgs-stable.yabridge
+      yabridgectl
+      yabridge
       vital
       aether-lv2
       dragonfly-reverb
