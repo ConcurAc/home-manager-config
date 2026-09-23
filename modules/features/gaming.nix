@@ -14,7 +14,6 @@
       azahar
       cemu
       eden
-
       ppsspp-sdl-wayland
       shadps4
     ];

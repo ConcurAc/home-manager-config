@@ -69,6 +69,7 @@
             modules = [
               sops-nix.homeModules.sops
               stylix.homeModules.stylix
+              retrom.homeModules.retrom
 
               ./hosts/opus
               ./home.nix

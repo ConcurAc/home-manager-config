@@ -5,10 +5,6 @@
   pkgs,
   ...
 }:
-let
-  secrets = config.sops.secrets;
-  name = "connor";
-in
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -35,8 +31,8 @@ in
   };
 
   home = {
-    username = name;
-    homeDirectory = "/home/${name}";
+    username = "connor";
+    homeDirectory = "/home/connor";
     stateVersion = "26.05";
 
     sessionVariables = {
@@ -307,6 +303,9 @@ in
     enable = true;
     base16Scheme = ./hephae-soft.yaml;
     polarity = "dark";
+    opacity = {
+      terminal = 0.8;
+    };
     cursor = {
       name = "phinger-cursors-dark";
       package = pkgs.phinger-cursors;
@@ -334,9 +333,6 @@ in
       enable = true;
       package = pkgs.dracula-icon-theme;
       dark = "Dracula";
-    };
-    opacity = {
-      terminal = 0.8;
     };
   };
 }

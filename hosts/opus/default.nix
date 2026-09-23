@@ -1,6 +1,6 @@
 { modules, ... }:
 {
-  imports = with modules; [
+  imports = with modules.features; [
     gaming
   ];
 }
