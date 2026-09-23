@@ -33,11 +33,14 @@
   programs.sftpman = {
     enable = true;
     defaultSshKey = "~/.ssh/id_ed25519";
-    mounts.games = {
-      host = "opus.home.arpa";
-      user = "connor";
-      mountPoint = "/srv/users/connor";
-      mountDestPath = "/srv/users/connor";
+    mounts = {
+      user = {
+        host = "opus.home.arpa";
+        user = "connor";
+        mountPoint = "/srv/users/connor";
+        mountDestPath = "/srv/users/connor";
+        mountOptions = [ "follow_symlinks" ];
+      };
     };
   };
 
