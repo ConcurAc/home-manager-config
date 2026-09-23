@@ -2,32 +2,25 @@
   description = "Home Manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
-
+    nixos.url = "path:/etc/nixos";
+    nixpkgs.follows = "nixos/nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    retrom = {
-      url = "github:JMBeresford/retrom/latest";
+
+    stylix.follows = "nixos/stylix";
+    sops-nix.follows = "nixos/sops-nix";
+    retrom.follows = "nixos/retrom";
+    amm = {
+      url = "github:ChrisDKN/Amethyst-Mod-Manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
-    {
+    inputs@{
       nixpkgs,
-      nixpkgs-stable,
-
       home-manager,
       sops-nix,
       stylix,
@@ -43,13 +36,12 @@
           let
             system = "x86_64-linux";
             pkgs = import nixpkgs { inherit system; };
-            pkgs-stable = import nixpkgs-stable { inherit system; };
           in
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
 
             extraSpecialArgs = {
-              inherit pkgs-stable modules;
+              inherit inputs modules;
             };
 
             modules = [
@@ -66,13 +58,12 @@
           let
             system = "x86_64-linux";
             pkgs = import nixpkgs { inherit system; };
-            pkgs-stable = import nixpkgs-stable { inherit system; };
           in
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
 
             extraSpecialArgs = {
-              inherit pkgs-stable modules;
+              inherit inputs modules;
             };
 
             modules = [
