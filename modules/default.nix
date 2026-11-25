@@ -1,6 +1,7 @@
 {
   defaults = ./defaults;
   features = {
+    ai = ./features/ai.nix;
     development = ./features/development.nix;
     engineering = ./features/engineering.nix;
     gaming = ./features/gaming.nix;

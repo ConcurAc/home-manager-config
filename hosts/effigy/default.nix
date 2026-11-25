@@ -1,6 +1,7 @@
 { modules, pkgs, ... }:
 {
   imports = with modules.features; [
+    ai
     gaming
     productivity
     music

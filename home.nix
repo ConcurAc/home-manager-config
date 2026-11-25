@@ -27,6 +27,8 @@
       "crypt/archives" = { };
       "crypt/media" = { };
       "crypt/games" = { };
+      "9router/api-key" = { };
+      "trilium/api-key" = { };
     };
   };
 
@@ -178,64 +180,7 @@
       '';
     };
 
-    mcp = {
-      enable = true;
-      servers = {
-        mcp-nixos = {
-          command = lib.getExe pkgs.mcp-nixos;
-          args = [ ];
-        };
-        mcp-server-git = {
-          command = lib.getExe pkgs.mcp-server-git;
-          args = [ ];
-        };
-        web-search = {
-          command = lib.getExe pkgs.open-websearch;
-          args = [ ];
-          env = {
-            MODE = "stdio";
-            DEFAULT_SEARCH_ENGINE = "brave";
-            ALLOWED_SEARCH_ENGINES = "brave,duckduckgo,bing";
-          };
-        };
-      };
-    };
-
-    opencode = {
-      enable = true;
-      enableMcpIntegration = true;
-      settings = {
-        lsp = true;
-        plugin = [
-          "superpowers@git+https://github.com/obra/superpowers.git"
-          "opencode-power-pack@git+https://github.com/waybarrios/opencode-power-pack.git"
-        ];
-        provider.llama-swap = {
-          npm = "@ai-sdk/openai-compatible";
-          name = "Local";
-          options = {
-            baseURL = "https://llama.home.arpa/v1";
-          };
-          models = {
-            "gemma-4-12b-qat" = {
-              id = "gemma-4-12b-qat";
-              name = "Gemma 4 12B QAT";
-              tool_call = true;
-            };
-            "qwopus3.5-9b-coder-mtp" = {
-              id = "qwopus3.5-9b-coder-mtp";
-              name = "Qwopus3.5 9B Coder MTP";
-              tool_call = true;
-            };
-          };
-        };
-      };
-    };
-
-    zed-editor = {
-      enable = true;
-      enableMcpIntegration = true;
-    };
+    zed-editor.enable = true;
   };
 
   services = {
