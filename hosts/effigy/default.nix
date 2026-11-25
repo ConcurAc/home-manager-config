@@ -39,6 +39,8 @@
     };
 
     modding.enable = true;
+
+    tools.wii-u-downloader.enable = true;
   };
 
   features.development = {

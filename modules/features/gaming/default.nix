@@ -7,6 +7,7 @@ in
   imports = [
     ./clients.nix
     ./modding.nix
+    ./tools.nix
   ];
 
   options.features.gaming = {
