@@ -233,6 +233,7 @@
     mimeApps = {
       enable = true;
       defaultApplicationPackages = with pkgs; [
+        junction
         foot
         yazi
         mpv
