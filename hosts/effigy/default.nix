@@ -13,15 +13,17 @@
   features.gaming = {
     enable = true;
 
-    retroarch = {
-      enable = true;
-      cores = [
-        "gpsp"
-        "mupen64plus"
-      ];
-    };
-
     clients = {
+      retroarch = {
+        enable = true;
+        cores = [
+          "gpsp"
+          "mupen64plus"
+        ];
+      };
+
+      lutris.enable = true;
+
       mgba.enable = true;
       dolphin.enable = true;
       melonds.enable = true;
@@ -68,6 +70,13 @@
     enable = true;
     defaultSshKey = "~/.ssh/id_ed25519";
     mounts = {
+      media = {
+        host = "opus.home.arpa";
+        user = "connor";
+        mountPoint = "/srv/media";
+        mountDestPath = "/srv/media";
+        mountOptions = [ "follow_symlinks" ];
+      };
       user = {
         host = "opus.home.arpa";
         user = "connor";

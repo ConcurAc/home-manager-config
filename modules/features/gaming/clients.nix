@@ -52,16 +52,31 @@ in
         description = "Add the ${client.core} RetroArch core";
       };
     }
-  ) clients;
+  ) clients // {
+    retroarch = {
+      enable = lib.mkEnableOption "RetroArch";
+
+      cores = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        description = "Extra cores, by pkgs.libretro attribute name";
+      };
+    };
+
+    lutris.enable = lib.mkEnableOption "Lutris";
+  };
 
   config = lib.mkIf cfg.enable {
     home.packages = map (client: client.package) (builtins.attrValues enabled);
 
-    programs.retroarch.cores = lib.mkIf cfg.retroarch.enable (
-      lib.genAttrs (lib.unique cores) (core: {
+    programs.retroarch = lib.mkIf cfg.clients.retroarch.enable {
+      enable = true;
+      cores = lib.genAttrs (lib.unique (cores ++ cfg.clients.retroarch.cores)) (core: {
         enable = true;
         package = pkgs.libretro.${core};
-      })
-    );
+      });
+    };
+
+    programs.lutris.enable = cfg.clients.lutris.enable;
   };
 }
