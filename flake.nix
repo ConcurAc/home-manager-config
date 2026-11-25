@@ -12,10 +12,6 @@
     stylix.follows = "nixos/stylix";
     sops-nix.follows = "nixos/sops-nix";
     retrom.follows = "nixos/retrom";
-    amm = {
-      url = "github:ChrisDKN/Amethyst-Mod-Manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =

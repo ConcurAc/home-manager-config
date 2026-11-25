@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   lib,
   pkgs,
@@ -62,7 +61,7 @@
       trilium-desktop
       calibre
 
-      inputs.amm.packages.${pkgs.stdenv.system}.default
+      amethyst-mod-manager
       file
       umu-launcher
 
