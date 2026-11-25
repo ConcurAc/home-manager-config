@@ -10,6 +10,37 @@
     security
   ];
 
+  features.gaming = {
+    enable = true;
+
+    retroarch = {
+      enable = true;
+      cores = [
+        "gpsp"
+        "mupen64plus"
+      ];
+    };
+
+    clients = {
+      mgba.enable = true;
+      dolphin.enable = true;
+      melonds.enable = true;
+      azahar.enable = true;
+      ppsspp.enable = true;
+      cemu.enable = true;
+      eden.enable = true;
+      shadps4.enable = true;
+
+      heroic.enable = true;
+      prismlauncher.enable = true;
+      daggerfall.enable = true;
+      openmw.enable = true;
+      ttt2.enable = true;
+    };
+
+    modding.enable = true;
+  };
+
   features.development = {
     rust = {
       enable = true;
