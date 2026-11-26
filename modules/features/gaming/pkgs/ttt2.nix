@@ -24,7 +24,6 @@
 }:
 
 let
-  # pinned by dependencies.lock.json
   zarchive = fetchFromGitHub {
     owner = "Exzap";
     repo = "ZArchive";
@@ -37,16 +36,6 @@ let
     rev = "194162c47469ce620dd2470eb767ff5e42f5954a";
     hash = "sha256-hJDF9CIaPdUSKFlj8DwEln0MJ7gFJj8rZ0FCSUMHr3s=";
   };
-
-  # ttt2-build links the game program against these on the host
-  kitLibs = lib.makeLibraryPath [
-    openssl
-    zlib
-    zstd
-    vulkan-loader
-    sdl3
-    shaderc
-  ];
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "tekken-tag-2-ultimate-edition";
@@ -105,7 +94,17 @@ stdenv.mkDerivation (finalAttrs: {
           python313
         ]
       }
-      --prefix LD_LIBRARY_PATH : ${kitLibs}
+      --prefix LD_LIBRARY_PATH : ${
+        lib.makeLibraryPath [
+          stdenv.cc.cc.lib
+          openssl
+          zlib
+          zstd
+          vulkan-loader
+          sdl3
+          shaderc
+        ]
+      }
     )
   '';
 
