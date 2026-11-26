@@ -6,7 +6,6 @@ in
 {
   imports = [
     ./clients.nix
-    ./modding.nix
     ./tools.nix
   ];
 

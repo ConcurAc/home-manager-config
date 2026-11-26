@@ -40,9 +40,13 @@
       ttt2.enable = true;
     };
 
-    modding.enable = true;
-
-    tools.wii-u-downloader.enable = true;
+    tools = {
+      amethyst-mod-manager = {
+        enable = true;
+        package = pkgs.amethyst-mod-manager-unfree;
+      };
+      wii-u-downloader.enable = true;
+    };
   };
 
   features.development = {
