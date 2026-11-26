@@ -105,4 +105,6 @@ in
     enableMcpIntegration = true;
     userSettings.context_servers.trilium.enabled = false;
   };
+
+  xdg.localBinInPath = lib.mkDefault true;
 }
