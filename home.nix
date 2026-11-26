@@ -64,7 +64,9 @@
       amethyst-mod-manager
       file
       umu-launcher
+      pulseaudio
 
+      nautilus
       oculante
       libqalculate
       satty
@@ -121,7 +123,9 @@
               server_hostname = "mail.scequ.com";
               server_port = 993;
               server_username = "connor@scequ.com";
-              server_password_command = "pass email/connor@scequ.com";
+              server_password = {
+                command = "pass email/connor@scequ.com";
+              };
             };
           };
         };
