@@ -61,20 +61,16 @@
       trilium-desktop
       calibre
 
-      amethyst-mod-manager
-      file
-      umu-launcher
-      pulseaudio
-
       nautilus
-      oculante
-      libqalculate
-      satty
       file-roller
+      oculante
 
+      libqalculate
       brightnessctl
       playerctl
+      pulseaudio
       pass-wayland
+      pinentry-curses
       xwayland-satellite
 
       pw-viz
@@ -182,7 +178,6 @@
         set selection-clipboard clipboard
       '';
     };
-
     zed-editor.enable = true;
   };
 
